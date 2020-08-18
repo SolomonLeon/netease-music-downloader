@@ -1,0 +1,12 @@
+venv
+*.pyc
+.env
+venv.bat
+images/
+songs/
+sqlite.db
+
+test.py
+test/
+
+*.xml

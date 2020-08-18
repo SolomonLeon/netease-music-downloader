@@ -1,0 +1,100 @@
+{
+    "UserAgents": [{
+        "append_to_default_ua": false,
+        "badge": "IE10",
+        "getUserAgentString": {},
+        "group": "Internet Explorer",
+        "is_managed": false,
+        "is_preset": true,
+        "key": "c_10",
+        "show_in_list": false,
+        "title": "Internet Explorer 10",
+        "ua_string": "Mozilla/5.0 (MSIE 10.0; Windows NT 6.1; Trident/5.0)",
+        "vendor": "Microsoft"
+    }, {
+        "append_to_default_ua": false,
+        "badge": "QB",
+        "getUserAgentString": {},
+        "group": "Chrome",
+        "is_managed": false,
+        "is_preset": false,
+        "key": "c_18",
+        "show_in_list": false,
+        "title": "InQQ",
+        "ua_string": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 QBCore/3.53.1031.400 QQBrowser/9.0.2524.400",
+        "vendor": ""
+    }, {
+        "append_to_default_ua": false,
+        "badge": "QC",
+        "getUserAgentString": {},
+        "group": "Chrome",
+        "is_managed": false,
+        "is_preset": false,
+        "key": "c_19",
+        "show_in_list": false,
+        "title": "QQ Client",
+        "ua_string": "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) QQ/9.1.5.25533 Chrome/43.0.2357.134 Safari/537.36 QBCore/3.43.1019.400 QQBrowser/9.0.2524.400",
+        "vendor": ""
+    }, {
+        "append_to_default_ua": false,
+        "badge": "FFW",
+        "getUserAgentString": {},
+        "group": "Firefox",
+        "is_managed": false,
+        "is_preset": true,
+        "key": "c_2",
+        "show_in_list": false,
+        "title": "Windows Firefox 33",
+        "ua_string": "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20120101 Firefox/33.0",
+        "vendor": "Mozilla, Inc."
+    }, {
+        "append_to_default_ua": false,
+        "badge": "FFM",
+        "getUserAgentString": {},
+        "group": "Firefox",
+        "is_managed": false,
+        "is_preset": true,
+        "key": "c_3",
+        "show_in_list": false,
+        "title": "Mac Firefox 33",
+        "ua_string": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10; rv:33.0) Gecko/20100101 Firefox/33.0",
+        "vendor": "Mozilla, Inc."
+    }, {
+        "append_to_default_ua": false,
+        "badge": "O12",
+        "getUserAgentString": {},
+        "group": "Opera",
+        "is_managed": false,
+        "is_preset": true,
+        "key": "c_4",
+        "show_in_list": false,
+        "title": "Opera 12.14",
+        "ua_string": "Opera/9.80 (Windows NT 6.0) Presto/2.12.388 Version/12.14",
+        "vendor": "Mozilla, Inc."
+    }, {
+        "append_to_default_ua": false,
+        "badge": "S7",
+        "getUserAgentString": {},
+        "group": "Safari",
+        "is_managed": false,
+        "is_preset": true,
+        "key": "c_5",
+        "show_in_list": false,
+        "title": "Mac Safari 7",
+        "ua_string": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A",
+        "vendor": "Apple, Inc."
+    }, {
+        "append_to_default_ua": false,
+        "badge": "IE9",
+        "getUserAgentString": {},
+        "group": "Internet Explorer",
+        "is_managed": false,
+        "is_preset": true,
+        "key": "c_9",
+        "show_in_list": false,
+        "title": "Internet Explorer 9",
+        "ua_string": "Mozilla/5.0 (MSIE 9.0; Windows NT 6.1; Trident/5.0)",
+        "vendor": "Microsoft"
+    }],
+    "PermanentSpoofs": []
+}
