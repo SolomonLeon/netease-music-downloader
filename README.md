@@ -32,7 +32,7 @@ Download playlist and songs from netease muisc. 从网易云音乐上下载歌�
   main -da
   ```
 
-- 自动添加音频文件的歌曲信息
+- 自动添加音频文件的歌曲信息（歌曲名、封面、作者、专辑）
 
   ![自动添加文件信息](https://s1.ax1x.com/2020/08/18/dMR5dJ.md.png)
 
@@ -45,7 +45,7 @@ Download playlist and songs from netease muisc. 从网易云音乐上下载歌�
 - 简单地删除已储存的播放列表
 
   ```bash
-  mian -rn 播放列表名字
+  main -rn 播放列表名字
   ```
   
 
@@ -74,6 +74,18 @@ main -h
 ```
 
 
+
+## 常见问题
+
+- **歌单**无法获取：
+  - requests报错：网络连接有问题
+    - 解决方法：检查网络连接、暴打运营商
+  - KeyError报错：触发网易云作弊检测机制
+    - 解决方法：睡一觉后再试一次
+- **歌曲**无法获取：
+  - 检查代理，网易云会屏蔽国外IP。
+- 无法找到 `user_agent_export.json` ：
+  - 在项目主页里下载 `user_agent_export.json` 并拷贝到程序目录。
 
 ## 获取源码
 
