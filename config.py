@@ -20,6 +20,7 @@ if not os.path.exists("config.ini"):
     cf.set("config", "down_path", "Current_dir")
     cf.set("config", "max_thread", "30")
     cf.set("config", "songfile_name", "{name} - {artist}")
+    cf.set("config", "cover_size", "450")
     with open("config.ini", "w", encoding="utf-8") as f:
         cf.write(f)
     del cf
@@ -32,3 +33,4 @@ else:
     basePath = cf.get("config", "down_path") # 自定义目录
 maxThread = int(cf.get("config", "max_thread"))
 namestr = cf.get("config", "songfile_name")
+coverSize = int(cf.get("config", "cover_size"))

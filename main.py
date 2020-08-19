@@ -96,12 +96,13 @@ def addNewSongs(playlistName, idList): # 需要传入id列表
             checkAlbum = session.query(albumDB).filter(albumDB.nid == albumNid) #查重
             if not checkAlbum.count():
                 session.add(albumDB(name=album, artist=albumArtists, imgSrc=albumImgSrc, nid=albumNid))
-                md5 = hashlib.md5() # 防止碰到文件名一样的图片
-                md5.update(albumImgSrc.encode("utf-8"))
-                albumImgSrcHex = md5.hexdigest()
-                filename = albumImgSrcHex+".jpg"
-                if not os.path.exists(os.path.join(albumCoverPath, filename)):
-                    albumImgDownloader.start(albumImgSrc+"?param=400y400", filename)
+                
+            md5 = hashlib.md5() # 防止碰到文件名一样的图片
+            md5.update(albumImgSrc.encode("utf-8"))
+            albumImgSrcHex = md5.hexdigest()
+            filename = albumImgSrcHex+".jpg"
+            if not os.path.exists(os.path.join(albumCoverPath, filename)):
+                albumImgDownloader.start(albumImgSrc+"?param={size}y{size}".format(size=config.coverSize), filename)
 
             checkSong = session.query(songDB).filter(songDB.nid == nid)
             if not checkSong.count():
