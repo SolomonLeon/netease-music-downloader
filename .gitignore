@@ -2,11 +2,12 @@ venv
 *.pyc
 .env
 venv.bat
+
 images/
 songs/
 sqlite.db
+config.ini
+*.xml
 
 test.py
 test/
-
-*.xml

@@ -61,7 +61,7 @@ def addNewSongs(playlistName, idList): # 需要传入id列表
     albumCoverPath = os.path.join(config.basePath,"images","album") # 保存专辑封面的文件夹
     if not os.path.exists(albumCoverPath):
         os.makedirs(albumCoverPath)
-    albumImgDownloader = downloader(albumCoverPath, 40)
+    albumImgDownloader = downloader(albumCoverPath, config.maxThread)
 
     offset = 0
     limit = 200 # 一次获取200首歌曲的信息，原因请看getSongsDetial的注释。
@@ -158,9 +158,10 @@ def removePlaylistInSongDB(playlistName, dataList): # 从歌曲信息中移除�
                 newPlaylist += i
         song.playlist = newPlaylist
     session.commit()
-
-def donwloadAllSongs(ignoreFailed=True):
+def downloadAllSongs(transcode=True):
     print("-"*10, "Download all songs", "-"*10)
+    if not transcode:
+        print("[!] No transcode.")
     session = Session()
 
     songList = session.query(songDB).all()
@@ -169,7 +170,7 @@ def donwloadAllSongs(ignoreFailed=True):
     downloadPath = os.path.join(config.basePath,"songs")
     if not os.path.exists(downloadPath):
         os.makedirs(downloadPath)
-    songDownloader = downloader(downloadPath, 30)
+    songDownloader = downloader(downloadPath, config.maxThread)
     fileList = os.listdir(downloadPath)
 
     failedListRaw = session.query(downloadLogDB).filter(downloadLogDB.status == 0).all() # url获取失败的条目
@@ -205,7 +206,7 @@ def donwloadAllSongs(ignoreFailed=True):
     session.commit()
 
     print("[*] Adding information to songs.")
-    addInfoToSongs(songsDict, True) # 给音频文件添加信息，顺便转码
+    addInfoToSongs(songsDict, transcode) # 给音频文件添加信息，顺便转码
 
     if len(failList) != 0:
         print("[*] Failed to get url:", failList)
@@ -339,58 +340,69 @@ def showAllPlaylist():
 def showAllSongs():
     session = Session()
     print("-"*10, "Show all songs.", "-"*10)
-    songs = session.query(songDB).all()
     print("{}\t{}\t{}".format("序号", "名字", "艺人", "专辑", "播放列表", "网易云id"))
     for song in songs:
+        print(song.to_dict())
         print("{}\t{}\t{}\t{}\t{}\t{}".format(song.id, song.name, song.artist, song.album, song.playlist, song.nid))
     print("") # 好看
 
 if __name__ == "__main__":
+    __version__ = "v1.0"
+    __author__ = "LeonZou"
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description="""\
-    ********************** Playlist downloader **********************
-    [*] A tool to download playlists from 163 music, written by Leon.
-    [*] All codes have been uploaded to Github:
-        github.com
+    ********************* Playlist downloader {} **********************
+    [*] A tool for downloading playlists from 163 music, written by Leon.
+    [*] 使用步骤：
+        1、先添加歌单： -a 歌单id 歌单名（可不填）
+        2、查看所有歌单： -p
+        3、下载所有歌曲： -da
+        4、移除歌单： -rn 歌单名
+        更多参数请看下面。
+    *********************************************************************
+    """.format(__version__),
+        epilog="""\
+    *********************************************************************
     [1] 所有参数可共存。
     [2] 有问题或建议欢迎提交issue。
-    [3] 可通过-p查询已添加的“播放列表”，可通过-s查询已添加的“歌曲”
-    *****************************************************************
-    """,
-        epilog="""\
-    *****************************************************************
+
+    [*] 主页：github.com/SolomonLeon/netease-music-downloader
     [*] Enjoy YOUR netease music~
-    *****************************************************************
+    *********************************************************************
     """,
         )
     parser.add_argument('-a', '--addPlaylist', nargs="+", help="添加播放列表：第一个参数是必选参数，为播放列表id，自动查重；第二个参数是可选参数，以自定义播放列表的名字。") # 默认返回None，所以不加default="False"
     parser.add_argument('-s', "--songs", action="store_true", help='列出所有歌曲')
     parser.add_argument('-p', "--playlists", action="store_true", help='列出所有的播放列表。')
-    parser.add_argument('-dn', "--downloadPlaylistByName", nargs=1, help='通过播放列表的名字下载歌曲。注意：若已自定义名字，请填写自定义后的名字。')
     parser.add_argument('-da', "--downloadAllSongs", action="store_true", help='下载所有的歌曲。')
+    parser.add_argument("--noTranscode", action="store_true", help='flac不自动转为m4a')
     parser.add_argument('-u','--update', action="store_true", help="同步所有的播放列表。注意事项见项目主页。")
     parser.add_argument('-rn', "--removePlaylistByName", nargs=1, help='通过名字移除播放列表。注意：若已自定义名字，请填写自定义后的名字。')
     parser.add_argument('-en', "--exportXmlPlaylistByName", nargs=1, help='通过名字导出iTunes的xml播放列表。注意：若已自定义名字，请填写自定义后的名字。')
 
 
     args = parser.parse_args()
-    if args.addPlaylist:
-        if len(args.addPlaylist) > 1:
-            addPlaylist(args.addPlaylist[0],args.addPlaylist[1])
-        else:
-            addPlaylist(args.addPlaylist[0])
-    if args.update:
-        updateAllPlaylist()
-    if args.removePlaylistByName:
-        removePlaylistByName(args.removePlaylistByName[0])
-    if args.playlists:
-        showAllPlaylist()
-    if args.songs:
-        showAllSongs()
-    if args.exportXmlPlaylistByName:
-        exportXmlPlaylistByName(args.exportXmlPlaylistByName[0])
-    if args.downloadAllSongs:
-        donwloadAllSongs()
-    elif args.downloadPlaylistByName:
-        downloadPlaylistByName(args.downloadPlaylistByName[0])
+    try:
+        if args.addPlaylist:
+            if len(args.addPlaylist) > 1:
+                addPlaylist(args.addPlaylist[0],args.addPlaylist[1])
+            else:
+                addPlaylist(args.addPlaylist[0])
+        if args.update:
+            updateAllPlaylist()
+        if args.removePlaylistByName:
+            removePlaylistByName(args.removePlaylistByName[0])
+        if args.playlists:
+            showAllPlaylist()
+        if args.songs:
+            showAllSongs()
+        if args.exportXmlPlaylistByName:
+            exportXmlPlaylistByName(args.exportXmlPlaylistByName[0])
+        if args.downloadAllSongs:
+            if args.noTranscode:
+                downloadAllSongs(False) # 不转码
+            else:
+                downloadAllSongs()
+    except KeyboardInterrupt:
+        print("[!] The main thread has stopped, waiting for the child thread to complete.")
