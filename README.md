@@ -146,6 +146,8 @@ cover_size = 450
 ## 开发及贡献
 ### 开发
 
+所有数据储存在 `sqlite.db` 内，数据库模型请移步到[这里](https://github.com/SolomonLeon/netease-music-downloader/blob/master/model.py#L17)。
+
 使用驼峰命名法，首字母小写。exp: `getSongsInfo`
 
 记得添加注释。

@@ -11,3 +11,9 @@ config.ini
 
 test.py
 test/
+
+build/
+dist/
+main.spec
+icon.ico
+build.bat
